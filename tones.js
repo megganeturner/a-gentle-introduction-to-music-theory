@@ -52,3 +52,22 @@ for (let step of MINOR_SCALE) {
   await playNote(currentFrequency);
   currentFrequency *= TWELFTH_ROOT_TWO ** step;
 }
+
+
+function increaseFrequencyBySemitones(frequency, semitones) {
+	return frequency * TWELFTH_ROOT_TWO ** semitones;
+}
+
+function noteFrequencies(startFrequency, semitoneJumps) {
+	let frequencies = [startFrequency];
+
+	for (let jump of semitoneJumps) {
+		frequencies.push(increaseFrequencyBySemitones(frequencies[frequencies.length - 1], jump));
+	}
+
+	return frequencies;
+}
+
+for (let noteFrequency of noteFrequencies(440, MAJOR_SCALE)) {
+	await playNote(noteFrequency);
+}
